@@ -39,6 +39,7 @@ export default {
                     data:this.Data
                 }]
               });
+              this.chart.hideLoading();
            })
           .catch(e => {
             this.errors.push(e);
@@ -78,6 +79,7 @@ export default {
             },
         });
 
+        this.chart.showLoading({});
         this.request('goods/top/10');
 
       }},
