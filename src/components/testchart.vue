@@ -1,92 +1,106 @@
 <template>
   <div>
-    <div id="testchart"></div>
+      <div id="testchart"></div>
   </div>
 </template>
 
 <script>
-import echarts from 'echarts';
-import {HTTP} from './http-common';
+ import echarts from 'echarts';
+ import {HTTP} from './http-common';
 
-export default {
-    data: {
-        chart: null,
-        goods: {"goods_list": [], "clicked": 0},
-        xAxisData: [],
-        yData: []
-    },
+ export default {
+     data() {
+         return {
+             chart: null,
+             goods: {},
+             xAxisData: [],
+             yData: []
+         }
+     },
 
-    methods: {
-      request(url, chart_option) {
-        let limit = 10;
-        HTTP.get(url)
-          .then(
-            (response) => {
-              this.goods = response.data;
-              this.formatData(this.goods);
+     watch: {
+         // 如果 `goods` 发生改变，这个函数就会运行
+         // 函数会添加数据到到 echarts 中
+         goods: function (newGoods) {
+             this.formatData(newGoods);
+             this.chart.setOption({
+                 xAxis: {
+                     data: this.xAxisData
+                 },
+                 series: [{
+                     // 根据名字对应到相应的系列
+                     name: '销量',
+                     data: this.yData
+                 }]
+             });
+             //hide loading icon
+             this.chart.hideLoading();
+         }
+     },
 
-              this.chart.setOption({
-                xAxis: {
-                    data: this.xAxisData
-                },
-                series: [{
-                    // 根据名字对应到相应的系列
-                    name: '销量',
-                    data: this.yData
-                }]
-              });
-          }).catch(e => {
-            this.errors.push(e);
-          })
-      },
-      formatData(data) {
-        this.xAxisData = [];
-        this.yData = [];
-        var x;
-        for (x = 0; x < data.goods_list.length; ++x) {
-          this.xAxisData.push(data.goods_list[x].goods_name);
-          this.yData.push(data.goods_list[x].clicked);
-        }
-      },
+     methods: {
+         request(url, chart_option) {
+             let limit = 10;
+             HTTP.get(url)
+                 .then(
+                     (response) => {
+                         this.goods = response.data;
+                     }).catch(e => {
+                         this.errors.push(e);
+                     })
+         },
 
-      drawChart(id) {
-        this.chart = echarts.init(document.getElementById(id));
-        this.chart.setOption({
-            title: {
-                text: '商品热度表'
-            },
-            tooltip: {},
-            legend: {
-                data:['点击数']
-            },
-            xAxis: {
-                data: []
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: []
-            }]
-        });
+         formatData(data) {
+             this.xAxisData = [];
+             this.yData = [];
+             var x;
+             for (x = 0; x < data.goods_list.length; ++x) {
+                 this.xAxisData.push(data.goods_list[x].goods_name);
+                 this.yData.push(data.goods_list[x].clicked);
+             }
+         },
 
-        this.request('goods/top/10');
+         drawChart(id) {
+             this.chart = echarts.init(document.getElementById(id));
+             this.chart.setOption({
+                 title: {
+                     text: '商品热度表'
+                 },
+                 tooltip: {},
+                 legend: {
+                     data:['销量']
+                 },
+                 xAxis: {
+                     data: []
+                 },
+                 yAxis: {},
+                 series: [{
+                     name: '销量',
+                     type: 'bar',
+                     data: []
+                 }]
+             });
+             // add loading icon
+             this.chart.showLoading({});
 
-      }},
-      mounted() {
-        this.$nextTick(() => {
-              this.drawChart('testchart');
-              var that = this;
-              var resizeTimer = null;
-              window.onresize = function() {
-                if (resizeTimer)
-                  clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                  that.drawChart('testchart');
-                }, 100);
-              }
-        });
-   }
+             this.request('goods/top/10');
+
+         }},
+     mounted() {
+         this.$nextTick(() => {
+             this.drawChart('testchart');
+
+             var that = this;
+             var resizeTimer = null;
+             window.onresize = function() {
+                 if (resizeTimer)
+                     clearTimeout(resizeTimer);
+                 resizeTimer = setTimeout(function() {
+                     that.drawChart('testchart');
+                 }, 100);
+             }
+         });
+     }
  }
 
 </script>
