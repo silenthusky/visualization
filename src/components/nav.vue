@@ -14,8 +14,10 @@ export default {
   data () {
     return {
       items: [
-        {name: '热销商品排名', ad: 'testchart'},
-        {name: 'post', ad: 'post'}
+        {name: '商品点击一览', ad: 'goodsclick'},
+        {name: '订单状态一览', ad: 'status'},
+        {name: '支付方式占比', ad: 'pay'},
+        {name: '配送方式占比', ad: 'ship'}
       ]
     };
   }

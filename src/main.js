@@ -5,14 +5,18 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 // 定义路由组件
-const TestChart = require('components/testchart.vue');
-const Post = require('components/post.vue');
+const Click = require('components/goodsclick.vue');
+const Status = require('components/status.vue');
+const Pay = require('components/pay.vue');
+const Ship = require('components/ship.vue');
 
 // 定义路由
 const routes = [
-  { path: '/', redirect: '/testchart' },
-  { path: '/testchart', component: TestChart },
-  { path: '/post', component: Post},
+  { path: '/', redirect: '/goodsclick' },
+  { path: '/status', component: Status},
+  { path: '/goodsclick', component: Click },
+  { path: '/pay', component: Pay},
+  { path: '/ship', component: Ship}
 ];
 
 // 创建 router 实例
