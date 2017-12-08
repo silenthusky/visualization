@@ -14,7 +14,8 @@ export default {
   data () {
     return {
       items: [
-        {name: '热销商品排名', ad: 'testchart'}
+        {name: '热销商品排名', ad: 'testchart'},
+        {name: 'post', ad: 'post'}
       ]
     };
   }

@@ -12,13 +12,15 @@
   import myHead from 'components/header';
   import myNav from 'components/nav';
   import myFoot from 'components/foot';
+  import Post from 'components/post';
 
   export default {
     name: 'app',
     components: {
       myHead,
       myNav,
-      myFoot
+      myFoot,
+      Post
     }
   }
 </script>

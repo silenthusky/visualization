@@ -6,11 +6,13 @@ Vue.use(VueRouter);
 
 // 定义路由组件
 const TestChart = require('components/testchart.vue');
+const Post = require('components/post.vue');
 
 // 定义路由
 const routes = [
   { path: '/', redirect: '/testchart' },
   { path: '/testchart', component: TestChart },
+  { path: '/post', component: Post},
 ];
 
 // 创建 router 实例
