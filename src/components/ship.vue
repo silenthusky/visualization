@@ -51,7 +51,7 @@ export default {
         //      });
         // }
          this.value1=data.orderShipByShunFeng;
-        
+
          this.value2=data.orderShipByZhongTong
       },
 
@@ -62,7 +62,7 @@ export default {
                 text: '配送方式占比',
                 x:'center'
             },
-            tooltip: {  
+            tooltip: {
               trigger: 'item',
               formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
