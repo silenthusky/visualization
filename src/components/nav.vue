@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       items: [
-        {name: '用户信息统计', ad: 'users_statistic'}
+        {name: '用户信息统计', ad: 'users_statistic'},
         {name: '商品点击一览', ad: 'goodsclick'},
         {name: '订单状态一览', ad: 'status'},
         {name: '支付方式占比', ad: 'pay'},
